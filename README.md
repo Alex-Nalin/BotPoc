@@ -118,8 +118,4 @@ you can choose where to store the datafeed.id
 
     "datafeedIdFilePath": "appbase"
 
-You can set the timer (in seconds) for the automation on connection, this is to add user to room once they accept the initial bot connection request and also to auto accept connection request from external users.
-
-    "connectionCheckerTimer": 30
-
-Start the bot using main_async.py and use "@MirrorBot /help" to display the commands
+Start the bot using main_async.py and use "@PocBot /help" to display the commands
