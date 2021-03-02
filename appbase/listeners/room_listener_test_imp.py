@@ -19,7 +19,6 @@ class RoomListenerTestImp(RoomListener):
     def on_room_created(self, room_created):
         logging.debug('Room created!', room_created)
 
-
     def on_room_deactivated(self, room_deactivated):
         logging.debug('room Deactivated', room_deactivated)
 
@@ -62,6 +61,10 @@ class AsyncRoomListenerImp(RoomListener):
 
     async def on_room_created(self, room_created):
         logging.debug('room created', room_created)
+        roomStream = room_created['stream']['streamId']
+
+        self.roommessage = dict(message="""<messageML>Thank you for adding me to this new room, how can I be of assistance?</messageML>""")
+        self.bot_client.get_message_client().send_msg(roomStream, self.roommessage)
 
     async def on_room_deactivated(self, room_deactivated):
         logging.debug('room Deactivated', room_deactivated)

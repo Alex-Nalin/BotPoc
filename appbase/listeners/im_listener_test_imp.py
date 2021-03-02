@@ -34,3 +34,11 @@ class AsyncIMListenerImp(IMListener):
 
     async def on_im_created(self, im_created):
         logging.debug("IM created!", im_created)
+        print(im_created)
+
+        try:
+            imStream = im_created['stream']['streamId']
+            self.immessage = dict(message="""<messageML>Hi, how can I be of assistance?</messageML>""")
+            self.bot_client.get_message_client().send_msg(imStream, self.immessage)
+        except:
+            pass

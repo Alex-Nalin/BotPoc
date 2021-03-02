@@ -1,7 +1,7 @@
 from sym_api_client_python.clients.sym_bot_client import APIClient
 from sym_api_client_python.clients.user_client import UserClient
 import asyncio
-import app.loader.config as conf
+import appbase.botloader.config as conf
 
 ## Use config file
 audit_stream = conf._config['bot_audit']
@@ -24,6 +24,10 @@ class Help:
                                   </tr> \
                                 </thead> \
                                 <tbody> \
+                                <tr> \
+                                  <td>" + conf._config['bot@Mention'] + " /getid</td> \
+                                  <td>Retrieves the stream id of the current room</td> \
+                                </tr> \
                                   <tr> \
                                     <td>" + conf._config['bot@Mention'] + " /help</td> \
                                     <td>Show this menu</td> \
@@ -35,3 +39,16 @@ class Help:
 
         self.help = dict(message="""<messageML>""" + displayHelp + """</messageML>""")
         return self.bot_client.get_message_client().send_msg(msg['stream']['streamId'], self.help)
+
+class SendIMmsg():
+
+    def __init__(self, bot_client):
+        self.bot_client = bot_client
+
+    async def sendIMmsg(self, StreamClient, userID, firstname, msg):
+
+        ## Gets stream IM of caller and bot
+        streamIM = (StreamClient.create_im(self, [str(userID)])['id'])
+        ## Sends message to the calling user via IM
+        self.imMesage = dict(message="""<messageML>Hi """ + firstname + """, """ + msg + """</messageML>""")
+        self.bot_client.get_message_client().send_msg(streamIM, self.imMesage)

@@ -9,6 +9,10 @@ __pycache__/
 # Application config files
 resources/config.json
 
+# Data
+data/alertroom.py
+data/wordfilter.py
+
 #Logs
 *.log
 
