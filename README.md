@@ -1,4 +1,4 @@
-# POC Bot (Alert Bot)
+# POC Bot (Alert Bot) by Alex Nalin (Symphony Solutions Architect)
 
 This is the core base of bot and has the below features:
 
