@@ -9,7 +9,7 @@ This is the core base of bot and has the below features:
 - Help Menu/table is already defined
 
 
-This bot was build using the Symphony Python SDK. (QAed: 1.3.3)
+This bot was build using the Symphony Python SDK. (QAed: 1.3.4)
 
 https://developers.symphony.com/symphony-developer/docs/get-started-with-python.
 

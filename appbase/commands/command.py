@@ -1,7 +1,5 @@
-from sym_api_client_python.clients.sym_bot_client import APIClient
-from sym_api_client_python.clients.user_client import UserClient
-import asyncio
 import appbase.botloader.config as conf
+import asyncio
 
 ## Use config file
 audit_stream = conf._config['bot_audit']
@@ -28,10 +26,14 @@ class Help:
                                   <td>" + conf._config['bot@Mention'] + " /getid</td> \
                                   <td>Retrieves the stream id of the current room</td> \
                                 </tr> \
-                                  <tr> \
-                                    <td>" + conf._config['bot@Mention'] + " /help</td> \
-                                    <td>Show this menu</td> \
-                                  </tr> \
+                                <tr> \
+                                  <td>" + conf._config['bot@Mention'] + " /status</td> \
+                                  <td>Shows how long the bot has been running</td> \
+                                </tr> \
+                                <tr> \
+                                  <td>" + conf._config['bot@Mention'] + " /help</td> \
+                                  <td>Show this menu</td> \
+                                </tr> \
                                 </tbody> \
                                 </table> \
                             </body> \

@@ -4,8 +4,7 @@ from appbase.commands.command import Help, SendIMmsg
 import defusedxml.ElementTree as ET
 import appbase.botloader.config as conf
 from appbase.data import wordfilter, alertroom
-import traceback
-import logging, html
+import logging, traceback, html, os, psutil, time, datetime
 
 ## Use config file
 audit_stream = conf._config['bot_audit']
@@ -57,7 +56,7 @@ class MessageProcessor:
         msg_xml = msg['message']
         msg_root = ET.fromstring(msg_xml)
         msg_text = msg_root[0].text
-        logging.debug(msg_text)
+        #logging.debug(msg_text)
 
         try:
             ## Get the command send and check its lenght
@@ -147,13 +146,14 @@ class MessageProcessor:
                         logging.exception("Message Command Processor Exception: {}".format(ex))
                         await auditLogging(self, ex, displayName, streamID, streamType, msg, userID, firstname)
 
-                else:
-                    ## Gets stream IM of caller and bot
-                    streamIM = (StreamClient.create_im(self, [str(userID)])['id'])
-                    ## Sends message to the calling user via IM
-                    self.imMesage = dict(message="""<messageML>Hi, """ + firstname + """, how are you today?</messageML>""")
-                    self.bot_client.get_message_client().send_msg(streamIM, self.imMesage)
-                    return logging.debug("bot @mentioned does not match expected, or not calling bot command")
+                    if "/status" in str(commandName):
+                        p = psutil.Process(os.getpid())
+                        elapsedTime = datetime.datetime.now() - datetime.datetime.strptime(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(p.create_time())), "%Y-%m-%d %H:%M:%S")
+                        seconds_in_day = 24 * 60 * 60
+                        uptime = divmod(elapsedTime.days * seconds_in_day + elapsedTime.seconds, 60)
+                        self.uptimemessage = dict(message="<messageML>The bot has been running for " + str(uptime[0]) + " Min and " + str(uptime[1]) + " Sec</messageML>")
+                        self.bot_client.get_message_client().send_msg(streamID, self.uptimemessage)
+
             else:
                 return logging.debug("User is not from the allowed Pod(s)")
         except:
